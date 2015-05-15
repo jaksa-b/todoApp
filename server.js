@@ -64,6 +64,8 @@ var Todo = mongoose.model('Todo',{
             });
         });
     });
-
+app.get('*', function (req, res) {
+    res.sendfile('./public/index.html');                        // load Angular
+});
 app.listen(8080);                                               // listen (start app with node server.js)
 console.log('App listening on port 8080');
