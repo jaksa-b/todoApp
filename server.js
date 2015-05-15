@@ -15,9 +15,55 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json'}));  // parse application/vnd.api+json as json
 app.use(methodOverride());
 
+// define model
 var Todo = mongoose.model('Todo',{
     text: String
 });
+
+// API routes
+    // get all todos
+    app.get('/api/todos', function (req, res) {
+        Todo.find(function (err, todos) {
+            if(err)
+               res.send(err);
+
+            res.json(todos); // return all todos in JSON format
+        });
+    });
+    // create To do and send back all todos after creation
+    app.post('/api/todos', function (req, res) {
+
+        // create a to do, information comes from AJAX request from Angular
+        Todo.create({
+            text : req.body.text,
+            done : false
+        }, function (req, todo) {
+            if(err)
+                res.send(err);
+
+            // get and return all the todos after you create another
+            Todo.find(function (err, todos) {
+                if(err)
+                  res.send(err);
+                res.json(todos);
+            });
+        });
+    });
+    // delete to do
+    app.delete('/api/todos/:todo_id', function (req, res) {
+        Todo.remove({
+            _id : req.params.todo_id
+        }, function (err, todo) {
+            if(err)
+                res.send(err);
+            // get and return all the todos after you delete one
+            Todo.find(function (err, todos) {
+                if(err)
+                    res.send(err);
+                res.json(todos);
+            });
+        });
+    });
 
 app.listen(8080);                                               // listen (start app with node server.js)
 console.log('App listening on port 8080');
