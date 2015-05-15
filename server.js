@@ -37,7 +37,7 @@ var Todo = mongoose.model('Todo',{
         Todo.create({
             text : req.body.text,
             done : false
-        }, function (req, todo) {
+        }, function (err, todo) {
             if(err)
                 res.send(err);
 

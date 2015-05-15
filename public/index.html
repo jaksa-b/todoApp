@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body ng-controller="MainCtrl">
+    <div class="container">
+        <h1>Make Todo List</h1>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Add New item" ng-model="formData.text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="createTodo()">Add To List</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+            <ul class="list-group" ng-repeat="todo in todos">
+                <li class="list-group-item">{{todo.text}}<a href=""><span class="badge pull-right list-group-item-danger" ng-click="deleteTodo(todo._id)">Delete</span></a>
+                </li>
+            </ul>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
